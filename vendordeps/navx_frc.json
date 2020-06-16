@@ -1,29 +1,20 @@
 {
     "fileName": "navx_frc.json",
     "name": "KauaiLabs_navX_FRC",
-<<<<<<< HEAD
     "version": "3.1.400",
-=======
-    "version": "3.1.344",
->>>>>>> master
+
     "uuid": "cb311d09-36e9-4143-a032-55bb2b94443b",
     "mavenUrls": [
         "https://repo1.maven.org/maven2/"
     ],
-<<<<<<< HEAD
     "jsonUrl": "https://www.kauailabs.com/dist/frc/2020/navx_frc.json",
-=======
-    "jsonUrl": "https://www.kauailabs.com/dist/frc/2019/navx_frc.json",
->>>>>>> master
+
     "javaDependencies": [
         {
             "groupId": "com.kauailabs.navx.frc",
             "artifactId": "navx-java",
-<<<<<<< HEAD
             "version": "3.1.400"
-=======
-            "version": "3.1.344"
->>>>>>> master
+
         }
     ],
     "jniDependencies": [],
@@ -31,23 +22,17 @@
         {
             "groupId": "com.kauailabs.navx.frc",
             "artifactId": "navx-cpp",
-<<<<<<< HEAD
             "version": "3.1.400",
-=======
-            "version": "3.1.344",
->>>>>>> master
+
             "headerClassifier": "headers",
             "sourcesClassifier": "sources",
             "sharedLibrary": false,
             "libName": "navx_frc",
             "skipInvalidPlatforms": true,
             "binaryPlatforms": [
-<<<<<<< HEAD
                 "linuxathena",
                 "linuxraspbian"
-=======
-                "linuxathena"
->>>>>>> master
+
             ]
         }
     ]
