@@ -1,4 +1,4 @@
-package robot;
+package frc.robot;
 
 /**
  * A class holding all of the ports on the robot.

@@ -1,4 +1,4 @@
-package robot;
+package frc.robot;
 
 /**
  * A class holding all of the constants of every mechanism on the robot.
