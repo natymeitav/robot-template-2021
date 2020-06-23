@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.subsystems.base.common.Constant;
+import frc.robot.subsystems.base.common.RangeConstant;
 import org.apache.commons.lang.math.DoubleRange;
 import org.apache.commons.lang.math.IntRange;
 import org.apache.commons.lang.math.LongRange;
@@ -111,8 +112,32 @@ public class Utils {
                     e.printStackTrace();
                 }
 
+            }else if (f.isAnnotationPresent(RangeConstant.class)) {
+                f.setAccessible(true);
+                RangeConstant constant = f.getAnnotation(RangeConstant.class);
+                try {
+                    Field modifiersField = Field.class.getDeclaredField("modifiers");
+                    modifiersField.setAccessible(true);
+                    modifiersField.setInt(f, f.getModifiers() & ~Modifier.FINAL);
+
+                    changeRangeField(f, constant);
+                } catch (IllegalAccessException | NoSuchFieldException e) { // Catch relevant exceptions
+                    e.printStackTrace();
+                }
+
             }
         }
+    }
+
+    private static void changeRangeField(Field field, RangeConstant constant) throws IllegalAccessException {
+        if (DoubleRange.class.equals(field.getType()))
+            field.set(null, new DoubleRange(constant.minDouble(), constant.maxDouble()));
+        else if (IntRange.class.equals(field.getType()))
+            field.set(null, new IntRange(constant.minInt(), constant.maxInt()));
+        else if (LongRange.class.equals(field.getType()))
+            field.set(null, new LongRange(constant.minLong(), constant.maxLong()));
+        else
+            throw new IllegalArgumentException("The specified type isn't supported: " + field.getType().toString());
     }
 
     private static void changeField(Field field, Constant constant) throws IllegalAccessException {
@@ -122,12 +147,6 @@ public class Utils {
             field.setInt(null, constant.intVal());
         else if (long.class.equals(field.getType()))
             field.setLong(null, constant.longVal());
-        else if (DoubleRange.class.equals(field.getType()))
-            field.set(null, new DoubleRange(constant.rangeVal().minDouble(), constant.rangeVal().maxDouble()));
-        else if (IntRange.class.equals(field.getType()))
-            field.set(null, new IntRange(constant.rangeVal().minInt(), constant.rangeVal().maxInt()));
-        else if (LongRange.class.equals(field.getType()))
-            field.set(null, new LongRange(constant.rangeVal().minLong(), constant.rangeVal().maxLong()));
         else
             throw new IllegalArgumentException("The specified type isn't supported: " + field.getType().toString());
     }
