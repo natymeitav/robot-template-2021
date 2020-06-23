@@ -7,15 +7,15 @@ import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
 
-public abstract class DrivetrainSubsystemBase extends SubsystemBase {
+public abstract class DrivetrainBase extends SubsystemBase {
     protected UnitModel defaultConversionModel;
     private final double openLoopRamp;
 
-    private DrivetrainSubsystemBase() {
+    private DrivetrainBase() {
         this.openLoopRamp = 0.0;
     }
 
-    protected DrivetrainSubsystemBase(double openLoopRamp) {
+    protected DrivetrainBase(double openLoopRamp) {
         this.openLoopRamp = openLoopRamp;
     }
 

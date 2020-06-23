@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 
-public class Drivetrain extends DrivetrainSubsystemBase {
+public class Drivetrain extends DrivetrainBase {
     private final TalonFX leftMaster;
     private final TalonFX leftSlave;
     private final TalonFX rightMaster;
