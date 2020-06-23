@@ -70,5 +70,35 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
 
     public abstract double getRightVelocity();
 
+    public abstract static class Builder {
+        protected final double kp, ki, kd, kf, ticksPerMeter;
+        protected int[] ports = new int[4];
+        protected boolean[] inverts = new boolean[4];
 
+        public Builder(double kp, double ki, double kd, double kf, double ticksPerMeter) {
+            this.kp = kp;
+            this.ki = ki;
+            this.kd = kd;
+            this.kf = kf;
+            this.ticksPerMeter = ticksPerMeter;
+        }
+
+        public Builder setPorts(int leftMasterPort, int leftSlavePort, int rightMasterPort, int rightSlavePort) {
+            ports[0] = leftMasterPort;
+            ports[1] = leftSlavePort;
+            ports[2] = rightMasterPort;
+            ports[3] = rightSlavePort;
+            return this;
+        }
+
+        public Builder setInverted(boolean isLeftMasterInverted, boolean isLeftSlaveInverted, boolean isRightMasterInverted, boolean isRightSlaveInverted) {
+            inverts[0] = isLeftMasterInverted;
+            inverts[1] = isLeftSlaveInverted;
+            inverts[2] = isRightMasterInverted;
+            inverts[3] = isRightSlaveInverted;
+            return this;
+        }
+
+        public abstract <T extends DrivetrainSubsystemBase> T build();
+    }
 }
