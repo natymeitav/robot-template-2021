@@ -64,5 +64,11 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
         Utils.configAllFalcons(motorConfigurations, leftMaster, leftSlave, rightMaster, rightSlave);
     }
 
+    public abstract void setPower(double leftPower, double rightPower);
+
+    public abstract double getLeftVelocity();
+
+    public abstract double getRightVelocity();
+
 
 }
