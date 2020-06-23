@@ -70,6 +70,8 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
 
     public abstract double getRightVelocity();
 
+    public abstract void setBrake(boolean brake);
+
     public abstract static class Builder {
         protected final double kp, ki, kd, kf, ticksPerMeter;
         protected int[] ports = new int[4];
