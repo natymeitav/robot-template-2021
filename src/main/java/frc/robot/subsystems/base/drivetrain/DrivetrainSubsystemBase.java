@@ -1,4 +1,4 @@
-package frc.robot.subsystems.base;
+package frc.robot.subsystems.base.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -48,10 +48,10 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
         rightMaster.setInverted(inverted[2]);
         rightSlave.setInverted(inverted[3]);
 
-        leftMaster.configOpenloopRamp(3); //TODO: use real number
-        leftSlave.configOpenloopRamp(3);
-        rightMaster.configOpenloopRamp(3);
-        rightSlave.configOpenloopRamp(3);
+        leftMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
+        leftSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
+        rightMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
+        rightSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
 
         motorConfigurations.setNeutralMode(NeutralMode.Coast);
         motorConfigurations.setEnableVoltageCompensation(true);
@@ -72,10 +72,15 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
 
     public abstract void setBrake(boolean brake);
 
+    /**
+     * a builder class for the drivetrain.
+     * this class set the values for the base model of the drivetrain,
+     * and helps to simplify the process of creating this complex subsystem.
+     */
     public abstract static class Builder {
         protected final double kp, ki, kd, kf, ticksPerMeter;
-        protected int[] ports = new int[4];
-        protected boolean[] inverts = new boolean[4];
+        protected int[] ports = {0, 0, 0, 0};
+        protected boolean[] inverts = {false, false, false, false};
 
         public Builder(double kp, double ki, double kd, double kf, double ticksPerMeter) {
             this.kp = kp;
@@ -85,6 +90,15 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
             this.ticksPerMeter = ticksPerMeter;
         }
 
+        /**
+         * set the ports of the motors of the base drivetrain subsystem.
+         *
+         * @param leftMasterPort  the port of the master left motor.
+         * @param leftSlavePort   the port of the slave left motor.
+         * @param rightMasterPort the port of the master right motor.
+         * @param rightSlavePort  the port of the slave right motor.
+         * @return a reference to this object.
+         */
         public Builder setPorts(int leftMasterPort, int leftSlavePort, int rightMasterPort, int rightSlavePort) {
             ports[0] = leftMasterPort;
             ports[1] = leftSlavePort;
@@ -93,6 +107,15 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
             return this;
         }
 
+        /**
+         * set whether or not the motors should be inverted.
+         *
+         * @param isLeftMasterInverted  whether the left master motor should be inverted.
+         * @param isLeftSlaveInverted   whether the left slave motor should be inverted.
+         * @param isRightMasterInverted whether the right master motor should be inverted.
+         * @param isRightSlaveInverted  whether the right slave motor should be inverted.
+         * @return a reference to this object.
+         */
         public Builder setInverted(boolean isLeftMasterInverted, boolean isLeftSlaveInverted, boolean isRightMasterInverted, boolean isRightSlaveInverted) {
             inverts[0] = isLeftMasterInverted;
             inverts[1] = isLeftSlaveInverted;
