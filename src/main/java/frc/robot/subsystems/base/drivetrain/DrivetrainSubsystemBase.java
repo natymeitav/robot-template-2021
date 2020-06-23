@@ -3,55 +3,40 @@ package frc.robot.subsystems.base.drivetrain;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.UnitModel;
 import frc.robot.utilities.FalconConfiguration;
 import frc.robot.utilities.Utils;
 
 public abstract class DrivetrainSubsystemBase extends SubsystemBase {
-    protected TalonFX leftMaster;
-    protected TalonFX leftSlave;
-    protected TalonFX rightMaster;
-    protected TalonFX rightSlave;
-    protected UnitModel conversionModel;
+    protected UnitModel defaultConversionModel;
+    private final double openLoopRamp;
 
-    protected DrivetrainSubsystemBase() {
+    private DrivetrainSubsystemBase() {
+        this.openLoopRamp = 0.0;
     }
 
-    protected DrivetrainSubsystemBase(int[] ports, boolean[] inverted, double kp, double ki, double kd, double kf, double ticksPerMeter) {
-        if (ports.length < 4)
-            throw new java.lang.IllegalArgumentException("You need at least 4 port for 4 motors, but you have only " + ports.length);
-        if (inverted.length < 4)
-            throw new IllegalArgumentException("You need at least 4 reversed values for 4 motors, but you have only " + inverted.length);
+    protected DrivetrainSubsystemBase(double openLoopRamp) {
+        this.openLoopRamp = openLoopRamp;
+    }
 
-        leftMaster = new TalonFX(ports[0]);
-        leftSlave = new TalonFX(ports[1]);
-        rightMaster = new TalonFX(ports[2]);
-        rightSlave = new TalonFX(ports[3]);
-        conversionModel = new UnitModel(ticksPerMeter);
+    protected TalonFX configMaster(int port, boolean inverted) {
+        TalonFX master = new TalonFX(port);
+        master.configFactoryDefault();
+        master.setSelectedSensorPosition(0);
+        master.setInverted(inverted);
+        master.configOpenloopRamp(openLoopRamp);
 
+        return master;
+    }
+
+    protected TalonFX configSlave(TalonFX master, int port, boolean inverted) {
+        TalonFX slave = configMaster(port, inverted);
+        slave.follow(master);
+        return slave;
+    }
+
+    protected void configFalcons(double kp, double ki, double kd, double kf, TalonFX... talons) {
         FalconConfiguration motorConfigurations = new FalconConfiguration();
-
-        leftMaster.configFactoryDefault();
-        leftSlave.configFactoryDefault();
-        rightMaster.configFactoryDefault();
-        rightSlave.configFactoryDefault();
-
-        leftMaster.setSelectedSensorPosition(0);
-        leftSlave.follow(leftMaster);
-        rightMaster.setSelectedSensorPosition(0);
-        rightSlave.follow(rightMaster);
-
-        //Inversions
-        leftMaster.setInverted(inverted[0]);
-        leftSlave.setInverted(inverted[1]);
-        rightMaster.setInverted(inverted[2]);
-        rightSlave.setInverted(inverted[3]);
-
-        leftMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
-        leftSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
-        rightMaster.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
-        rightSlave.configOpenloopRamp(Constants.Drivetrain.OPEN_LOOP_RAMP);
 
         motorConfigurations.setNeutralMode(NeutralMode.Coast);
         motorConfigurations.setEnableVoltageCompensation(true);
@@ -61,7 +46,7 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
         motorConfigurations.setEnableCurrentLimit(true);
         motorConfigurations.setSupplyCurrentLimit(40);
 
-        Utils.configAllFalcons(motorConfigurations, leftMaster, leftSlave, rightMaster, rightSlave);
+        Utils.configAllFalcons(motorConfigurations, talons);
     }
 
     public abstract void setPower(double leftPower, double rightPower);
@@ -72,58 +57,4 @@ public abstract class DrivetrainSubsystemBase extends SubsystemBase {
 
     public abstract void setBrake(boolean brake);
 
-    /**
-     * a builder class for the drivetrain.
-     * this class set the values for the base model of the drivetrain,
-     * and helps to simplify the process of creating this complex subsystem.
-     */
-    public abstract static class Builder {
-        protected final double kp, ki, kd, kf, ticksPerMeter;
-        protected int[] ports = {0, 0, 0, 0};
-        protected boolean[] inverts = {false, false, false, false};
-
-        public Builder(double kp, double ki, double kd, double kf, double ticksPerMeter) {
-            this.kp = kp;
-            this.ki = ki;
-            this.kd = kd;
-            this.kf = kf;
-            this.ticksPerMeter = ticksPerMeter;
-        }
-
-        /**
-         * set the ports of the motors of the base drivetrain subsystem.
-         *
-         * @param leftMasterPort  the port of the master left motor.
-         * @param leftSlavePort   the port of the slave left motor.
-         * @param rightMasterPort the port of the master right motor.
-         * @param rightSlavePort  the port of the slave right motor.
-         * @return a reference to this object.
-         */
-        public Builder setPorts(int leftMasterPort, int leftSlavePort, int rightMasterPort, int rightSlavePort) {
-            ports[0] = leftMasterPort;
-            ports[1] = leftSlavePort;
-            ports[2] = rightMasterPort;
-            ports[3] = rightSlavePort;
-            return this;
-        }
-
-        /**
-         * set whether or not the motors should be inverted.
-         *
-         * @param isLeftMasterInverted  whether the left master motor should be inverted.
-         * @param isLeftSlaveInverted   whether the left slave motor should be inverted.
-         * @param isRightMasterInverted whether the right master motor should be inverted.
-         * @param isRightSlaveInverted  whether the right slave motor should be inverted.
-         * @return a reference to this object.
-         */
-        public Builder setInverted(boolean isLeftMasterInverted, boolean isLeftSlaveInverted, boolean isRightMasterInverted, boolean isRightSlaveInverted) {
-            inverts[0] = isLeftMasterInverted;
-            inverts[1] = isLeftSlaveInverted;
-            inverts[2] = isRightMasterInverted;
-            inverts[3] = isRightSlaveInverted;
-            return this;
-        }
-
-        public abstract <T extends DrivetrainSubsystemBase> T build();
-    }
 }
