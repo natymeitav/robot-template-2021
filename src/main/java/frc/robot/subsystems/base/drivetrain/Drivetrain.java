@@ -2,17 +2,25 @@ package frc.robot.subsystems.base.drivetrain;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import frc.robot.utilities.Utils;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 
 public class Drivetrain extends DrivetrainSubsystemBase {
+    private final TalonFX leftMaster;
+    private final TalonFX leftSlave;
+    private final TalonFX rightMaster;
+    private final TalonFX rightSlave;
 
-    private Drivetrain() {
+
+    public Drivetrain() {
+        super(3);
+        leftMaster = configMaster(1, true);
+        leftSlave = configSlave(leftMaster, 2, false);
+        rightMaster = configMaster(3, true);
+        rightSlave = configSlave(rightMaster, 4, false);
+        configFalcons(1, 2, 3, 4, leftMaster, leftSlave, rightMaster, rightSlave);
     }
 
-    private Drivetrain(int[] ports, boolean[] inverted, double kp, double ki, double kd, double kf, double ticksPerMeter) {
-        super(ports, inverted, kp, ki, kd, kf, ticksPerMeter);
-    }
 
     /**
      * set the power to the motors of the drivetrain.
@@ -31,7 +39,7 @@ public class Drivetrain extends DrivetrainSubsystemBase {
      */
     @Override
     public double getLeftVelocity() {
-        return conversionModel.toVelocity(leftMaster.getSelectedSensorVelocity());
+        return defaultConversionModel.toVelocity(leftMaster.getSelectedSensorVelocity());
     }
 
     /**
@@ -39,7 +47,7 @@ public class Drivetrain extends DrivetrainSubsystemBase {
      */
     @Override
     public double getRightVelocity() {
-        return conversionModel.toVelocity(rightMaster.getSelectedSensorVelocity());
+        return defaultConversionModel.toVelocity(rightMaster.getSelectedSensorVelocity());
     }
 
     /**
@@ -56,31 +64,4 @@ public class Drivetrain extends DrivetrainSubsystemBase {
         rightMaster.setNeutralMode(neutralMode);
         rightMaster.setNeutralMode(neutralMode);
     }
-
-    public static class Builder extends DrivetrainSubsystemBase.Builder {
-
-        public Builder(double kp, double ki, double kd, double kf, double ticksPerMeter) {
-            super(kp, ki, kd, kf, ticksPerMeter);
-        }
-
-        @Override
-        public DrivetrainSubsystemBase.Builder setPorts(int leftMasterPort, int leftSlavePort, int rightMasterPort, int rightSlavePort) {
-            return super.setPorts(leftMasterPort, leftSlavePort, rightMasterPort, rightSlavePort);
-        }
-
-        @Override
-        public DrivetrainSubsystemBase.Builder setInverted(boolean isLeftMasterInverted, boolean isLeftSlaveInverted, boolean isRightMasterInverted, boolean isRightSlaveInverted) {
-            return super.setInverted(isLeftMasterInverted, isLeftSlaveInverted, isRightMasterInverted, isRightSlaveInverted);
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public Drivetrain build() {
-            if (Utils.arrayContains(ports, 0))
-                throw new IllegalStateException("You need to specify ALL of the ports for the subsystem in order to create it.");
-            return new Drivetrain(ports, inverts,
-                    kp, ki, kd, kf, ticksPerMeter);
-        }
-    }
-
 }
