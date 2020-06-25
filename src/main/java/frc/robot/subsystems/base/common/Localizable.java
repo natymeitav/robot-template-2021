@@ -6,7 +6,9 @@ public interface Localizable {
 
     double getHeading();
 
-    double getCCWHeading();
+    default double getCCWHeading() {
+        return -getHeading();
+    }
 
     double getLeftDistance();
 
