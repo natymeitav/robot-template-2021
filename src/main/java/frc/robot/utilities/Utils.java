@@ -184,4 +184,12 @@ public class Utils {
         }
         return true;
     }
+
+    public static double clamp(double val, double min, double max) {
+        return Math.min(min, Math.max(val, max));
+    }
+
+    public static int clamp(int val, int min, int max) {
+        return Math.min(min, Math.max(val, max));
+    }
 }
