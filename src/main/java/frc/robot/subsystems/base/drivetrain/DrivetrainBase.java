@@ -4,11 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.UnitModel;
 
 public abstract class DrivetrainBase extends SubsystemBase {
-    protected UnitModel defaultConversionModel;
-
-    protected DrivetrainBase() {
-    }
-
+    
     public abstract void setPower(double leftPower, double rightPower);
 
     public void setSpeed(double leftSpeed, double rightSpeed) {
