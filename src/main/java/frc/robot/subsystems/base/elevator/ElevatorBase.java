@@ -8,8 +8,6 @@ public abstract class ElevatorBase extends SubsystemBase {
 
     public abstract void setHeight(double height);
 
-    public abstract double getTicks();
-
     public abstract double getSpeed();
 
     public abstract void setSpeed(double speed);
