@@ -16,6 +16,8 @@ public class FalconBuilder {
         motor.setNeutralMode(NeutralMode.Coast);
         motor.enableVoltageCompensation(true);
         motor.configVoltageCompSaturation(12.);
+        motor.overrideSoftLimitsEnable(false);
+        motor.overrideLimitSwitchesEnable(false);
     }
 
     public static void configFalcons(FalconConfiguration configurations, TalonFX... falcons) {

@@ -74,21 +74,30 @@ public class TalonBuilder {
         return addPID(0, kp, ki, kd, kf);
     }
 
-    public TalonBuilder configPhysics(boolean sofLimitEnabled, int softThreshold, int cruiseVelocity) {
+    public TalonBuilder configPhysics(boolean sofLimitEnabled, int softThreshold, int acceleration, int cruiseVelocity) {
         motor.configForwardSoftLimitEnable(sofLimitEnabled);
         motor.configReverseSoftLimitEnable(sofLimitEnabled);
         motor.configForwardSoftLimitThreshold(softThreshold);
         motor.configReverseSoftLimitThreshold(softThreshold);
 
+        motor.configMotionAcceleration(acceleration);
         motor.configMotionCruiseVelocity(cruiseVelocity);
         return this;
     }
 
-    public TalonBuilder configCurrentLimit(boolean enabled, double supply, double threshold, int thresholdTime) {
+    public TalonBuilder configSupplyCurrentLimit(boolean enabled, double supply, double threshold, int thresholdTime) {
         motor.configSupplyCurrentLimit(
                 new SupplyCurrentLimitConfiguration(enabled, supply, threshold, thresholdTime)
         );
 
+        return this;
+    }
+
+    public TalonBuilder configLimits(int continuous, int peakCurrent, int peakCurrentDuration) {
+        motor.configContinuousCurrentLimit(15);
+        motor.configPeakCurrentLimit(30);
+        motor.configPeakCurrentDuration(1000);
+        motor.enableCurrentLimit(true);
         return this;
     }
 
