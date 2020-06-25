@@ -3,7 +3,7 @@ package frc.robot.subsystems.base.drivetrain;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
+import frc.robot.subsystems.base.common.FalconBuilder;
 
 public class Drivetrain extends DrivetrainBase {
     private final TalonFX leftMaster;
@@ -13,12 +13,13 @@ public class Drivetrain extends DrivetrainBase {
 
 
     public Drivetrain() {
-        super(3);
-        leftMaster = configMaster(1, true);
-        leftSlave = configSlave(leftMaster, 2, false);
-        rightMaster = configMaster(3, true);
-        rightSlave = configSlave(rightMaster, 4, false);
-        configFalcons(1, 2, 3, 4, leftMaster, leftSlave, rightMaster, rightSlave);
+        leftMaster = new FalconBuilder(1, true, 3).addSensor(true).build();
+//        leftMaster = configMaster(1, true);
+        leftSlave = new FalconBuilder(2, false, 3).addSensor(true).follow(leftMaster).build();
+        rightMaster = new FalconBuilder(3, true, 3).addSensor(true).build();
+        rightSlave = new FalconBuilder(4, false, 3).addSensor(true).follow(rightMaster).build();
+
+        FalconBuilder.configPID(0, 1, 2, 3, leftMaster, leftSlave, rightMaster, rightSlave);
     }
 
 

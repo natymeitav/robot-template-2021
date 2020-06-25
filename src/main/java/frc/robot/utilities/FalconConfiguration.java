@@ -1,19 +1,21 @@
 package frc.robot.utilities;
 
-import com.ctre.phoenix.motorcontrol.*;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFXPIDSetConfiguration;
 
 public class FalconConfiguration {
     private NeutralMode neutralMode;
     private boolean enableVoltageCompensation;
-    private double voltageCompensationSaturation;
-    private double supplyCurrentLimit = 0;
+    private double voltageCompensationSaturation = -1.;
+    private double supplyCurrentLimit = -1;
     private boolean enableCurrentLimit = false;
-    private double threshHoldCurrent = 0;
-    private double threshHoldTime = 0;
+    private double threshHoldCurrent = -1;
+    private double threshHoldTime = -1;
 
-    private double[] pidSet = {0, 0, 0, 0};
+    private double[] pidSet = {-1, -1, -1, -1};
     public TalonFXConfiguration motorConfigs = new TalonFXConfiguration();
 
 

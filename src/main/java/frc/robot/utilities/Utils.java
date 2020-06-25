@@ -12,6 +12,7 @@ import org.apache.commons.lang.math.LongRange;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 
 
 public class Utils {
@@ -55,17 +56,22 @@ public class Utils {
     public static void configAllFalcons(FalconConfiguration configurations, TalonFX... falcons) {
         for (TalonFX falcon : falcons) {
             falcon.configAllSettings(configurations.motorConfigs);
-            falcon.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
             falcon.setNeutralMode(configurations.getNeutralMode());
             falcon.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
-            falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
-                    , configurations.getSupplyCurrentLimit()
-                    , configurations.getThreshHoldCurrent()
-                    , configurations.getThreshHoldTime()));
-            falcon.config_kP(0, configurations.getPidSet()[0]);
-            falcon.config_kI(0, configurations.getPidSet()[1]);
-            falcon.config_kD(0, configurations.getPidSet()[2]);
-            falcon.config_kF(0, configurations.getPidSet()[3]);
+            if (configurations.getVoltageCompensationSaturation() != -1.)
+                falcon.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
+            if (configurations.getThreshHoldCurrent() != -1) {
+                falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
+                        , configurations.getSupplyCurrentLimit()
+                        , configurations.getThreshHoldCurrent()
+                        , configurations.getThreshHoldTime()));
+            }
+            if (!Arrays.equals(configurations.getPidSet(), new double[]{-1, -1, -1, -1})) {
+                falcon.config_kP(0, configurations.getPidSet()[0]);
+                falcon.config_kI(0, configurations.getPidSet()[1]);
+                falcon.config_kD(0, configurations.getPidSet()[2]);
+                falcon.config_kF(0, configurations.getPidSet()[3]);
+            }
 
         }
     }
@@ -112,7 +118,7 @@ public class Utils {
                     e.printStackTrace();
                 }
 
-            }else if (f.isAnnotationPresent(RangeConstant.class)) {
+            } else if (f.isAnnotationPresent(RangeConstant.class)) {
                 f.setAccessible(true);
                 RangeConstant constant = f.getAnnotation(RangeConstant.class);
                 try {
