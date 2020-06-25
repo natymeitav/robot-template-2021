@@ -6,9 +6,23 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import frc.robot.utilities.TalonConfiguration;
 
+/**
+ * Provide a builder for Talon motors.
+ *
+ * @author Barel
+ * @version 1.0
+ * @since 2020-off
+ */
 public class TalonBuilder {
     private final TalonSRX motor;
 
+    /**
+     * Create a builder for the talons.
+     *
+     * @param port         the port of the talon.
+     * @param inverted     whether the talon is inverted.
+     * @param openLoopRamp Configures the open-loop ramp rate.
+     */
     public TalonBuilder(int port, boolean inverted, double openLoopRamp) {
         motor = new TalonSRX(port);
         motor.configFactoryDefault();
@@ -19,6 +33,12 @@ public class TalonBuilder {
         motor.configVoltageCompSaturation(12.);
     }
 
+    /**
+     * config set of the motors.
+     *
+     * @param configurations the configuration.
+     * @param talons         the talons to configure.
+     */
     public static void configMotors(TalonConfiguration configurations, TalonSRX... talons) {
         for (TalonSRX talonSRX : talons) {
             talonSRX.configAllSettings(configurations.motorConfigs);
@@ -32,6 +52,15 @@ public class TalonBuilder {
         }
     }
 
+    /**
+     * Set PID to talons.
+     *
+     * @param kp     proportional.
+     * @param ki     integral.
+     * @param kd     derivative.
+     * @param kf     feed-forward.
+     * @param talons talons to configure.
+     */
     public static void configPID(double kp, double ki, double kd, double kf, TalonSRX... talons) {
         for (TalonSRX motor : talons) {
             motor.config_kP(0, kp, 10);
@@ -41,11 +70,21 @@ public class TalonBuilder {
         }
     }
 
+    /**
+     * @param mode the new mode.
+     * @return a reference to this object.
+     */
     public TalonBuilder overrideNeuralMode(NeutralMode mode) {
         motor.setNeutralMode(mode);
         return this;
     }
 
+    /**
+     * @param position    sensor position.
+     * @param sensorPhase the phase of the sensor.
+     * @return a reference to this object.
+     * @see #addSensor(boolean)
+     */
     public TalonBuilder addSensor(int position, boolean sensorPhase) {
         motor.setSelectedSensorPosition(position);
         motor.setSensorPhase(sensorPhase);
@@ -53,10 +92,28 @@ public class TalonBuilder {
         return this;
     }
 
+    /**
+     * @param sensorPhase the phase of the sensor.
+     * @return a reference to this object.
+     * @see #addSensor(int, boolean)
+     */
     public TalonBuilder addSensor(boolean sensorPhase) {
         return addSensor(0, sensorPhase);
     }
 
+    /**
+     * config the PID for the talon.
+     *
+     * @param slot    the slot of the pid.
+     * @param kp      proportional.
+     * @param ki      integral.
+     * @param kd      derivative.
+     * @param kf      feed-forward.
+     * @param timeout the delta time between each change to the PID.
+     * @return a reference to this object.
+     * @see #addPID(int, double, double, double, double)
+     * @see #addPID(double, double, double, double)
+     */
     public TalonBuilder addPID(int slot, double kp, double ki, double kd, double kf, int timeout) {
         motor.config_kP(slot, kp, timeout);
         motor.config_kI(slot, ki, timeout);
@@ -66,14 +123,45 @@ public class TalonBuilder {
         return this;
     }
 
+    /**
+     * config the PID for the talon.
+     *
+     * @param slot the slot of the pid.
+     * @param kp   proportional.
+     * @param ki   integral.
+     * @param kd   derivative.
+     * @param kf   feed-forward.
+     * @return a reference to this object.
+     * @see #addPID(int, double, double, double, double, int)
+     * @see #addPID(double, double, double, double)
+     */
     public TalonBuilder addPID(int slot, double kp, double ki, double kd, double kf) {
         return addPID(slot, kp, ki, kd, kf, 10);
     }
 
+    /**
+     * config the PID for the talon.
+     *
+     * @param kp proportional.
+     * @param ki integral.
+     * @param kd derivative.
+     * @param kf feed-forward.
+     * @return a reference to this object.
+     * @see #addPID(int, double, double, double, double)
+     * @see #addPID(int, double, double, double, double, int)
+     */
     public TalonBuilder addPID(double kp, double ki, double kd, double kf) {
         return addPID(0, kp, ki, kd, kf);
     }
 
+    /**
+     * config the soft limits and cruise velocity.
+     *
+     * @param sofLimitEnabled whether the soft limit is enabled.
+     * @param softThreshold   the threshold.
+     * @param cruiseVelocity  cruise velocity.
+     * @return a reference to this object.
+     */
     public TalonBuilder configPhysics(boolean sofLimitEnabled, int softThreshold, int acceleration, int cruiseVelocity) {
         motor.configForwardSoftLimitEnable(sofLimitEnabled);
         motor.configReverseSoftLimitEnable(sofLimitEnabled);
@@ -85,6 +173,15 @@ public class TalonBuilder {
         return this;
     }
 
+    /**
+     * config the current limit.
+     *
+     * @param enabled       whether the limit is enabled.
+     * @param supply        current limit to supply.
+     * @param threshold     the threshold.
+     * @param thresholdTime the threshold time.
+     * @return a reference to this object.
+     */
     public TalonBuilder configSupplyCurrentLimit(boolean enabled, double supply, double threshold, int thresholdTime) {
         motor.configSupplyCurrentLimit(
                 new SupplyCurrentLimitConfiguration(enabled, supply, threshold, thresholdTime)
@@ -93,19 +190,35 @@ public class TalonBuilder {
         return this;
     }
 
+    /**
+     * config other limits.
+     *
+     * @param continuous          the continuous limit.
+     * @param peakCurrent         the peak limit.
+     * @param peakCurrentDuration the peak duration.
+     * @return a reference to this object.
+     */
     public TalonBuilder configLimits(int continuous, int peakCurrent, int peakCurrentDuration) {
-        motor.configContinuousCurrentLimit(15);
-        motor.configPeakCurrentLimit(30);
-        motor.configPeakCurrentDuration(1000);
-        motor.enableCurrentLimit(true);
+        motor.configContinuousCurrentLimit(continuous);
+        motor.configPeakCurrentLimit(peakCurrent);
+        motor.configPeakCurrentDuration(peakCurrentDuration);
         return this;
     }
 
+    /**
+     * @param master the talon to follow.
+     * @return a reference to this object.
+     */
     public TalonBuilder follow(TalonFX master) {
         motor.follow(master);
         return this;
     }
 
+    /**
+     * Create a talon object.
+     *
+     * @return new Talon.
+     */
     public TalonSRX build() {
         return motor;
     }
