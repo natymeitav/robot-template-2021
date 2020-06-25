@@ -135,7 +135,7 @@ fabric.properties
 # Sensitive or high-churn files
 
 # Gradle
-
+.gradle/**
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
@@ -354,3 +354,5 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode,intellij,intellij+all,intellij+iml
+
+*.lock
