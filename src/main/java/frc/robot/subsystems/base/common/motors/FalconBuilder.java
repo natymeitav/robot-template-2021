@@ -1,4 +1,4 @@
-package frc.robot.subsystems.base.common;
+package frc.robot.subsystems.base.common.motors;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
@@ -20,7 +20,7 @@ public class FalconBuilder {
         motor.overrideLimitSwitchesEnable(false);
     }
 
-    public static void configFalcons(FalconConfiguration configurations, TalonFX... falcons) {
+    public static void configMotors(FalconConfiguration configurations, TalonFX... falcons) {
         for (TalonFX falcon : falcons) {
             falcon.configAllSettings(configurations.motorConfigs);
             falcon.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());

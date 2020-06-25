@@ -3,7 +3,7 @@ package frc.robot.subsystems.base.drivetrain;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import frc.robot.subsystems.base.common.FalconBuilder;
+import frc.robot.subsystems.base.common.motors.FalconBuilder;
 
 public class Drivetrain extends DrivetrainBase {
     private final TalonFX leftMaster;

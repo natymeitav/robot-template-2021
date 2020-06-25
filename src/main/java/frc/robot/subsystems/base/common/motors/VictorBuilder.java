@@ -1,4 +1,4 @@
-package frc.robot.subsystems.base.common;
+package frc.robot.subsystems.base.common.motors;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -18,7 +18,7 @@ public class VictorBuilder {
         motor.configVoltageCompSaturation(12.);
     }
 
-    public static void configFalcons(VictorConfiguration configurations, VictorSPX... victors) {
+    public static void configMotors(VictorConfiguration configurations, VictorSPX... victors) {
         for (VictorSPX victor : victors) {
             victor.configAllSettings(configurations.motorConfigs);
             victor.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());

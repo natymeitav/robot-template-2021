@@ -1,4 +1,4 @@
-package frc.robot.subsystems.base.common;
+package frc.robot.subsystems.base.common.motors;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
@@ -19,7 +19,7 @@ public class TalonBuilder {
         motor.configVoltageCompSaturation(12.);
     }
 
-    public static void configFalcons(TalonConfiguration configurations, TalonSRX... talons) {
+    public static void configMotors(TalonConfiguration configurations, TalonSRX... talons) {
         for (TalonSRX talonSRX : talons) {
             talonSRX.configAllSettings(configurations.motorConfigs);
             talonSRX.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
