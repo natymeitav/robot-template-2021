@@ -1,21 +1,18 @@
 package frc.robot.subsystems.base.shooter;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+/**
+ * @author Barel
+ * @version 1.0
+ * @since 2020-off
+ * <p>
+ * The class contains various methods that every {@code Shooter} <b>should</b> implement.
+ * <p>
+ * The purpose of this class is to provide guidelines and restrict what important to us and what not.
+ */
+
 public abstract class ShooterBase extends SubsystemBase {
-
-    public void configPID(TalonFX motor, double kp, double ki, double kd, double kf, int slot, int timeout) {
-        motor.config_kP(slot, kp, timeout);
-        motor.config_kI(slot, ki, timeout);
-        motor.config_kD(slot, kd, timeout);
-        motor.config_kF(slot, kf, timeout);
-    }
-
-    public void configPID(TalonFX motor, double kp, double ki, double kd, double kf) {
-        configPID(motor, kp, ki, kd, kf, 0, 10);
-    }
-
     public abstract double getSpeed();
 
     public abstract void setSpeed(double speed);
