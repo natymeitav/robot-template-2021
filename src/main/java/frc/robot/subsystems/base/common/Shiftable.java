@@ -3,7 +3,7 @@ package frc.robot.subsystems.base.common;
 import frc.robot.subsystems.UnitModel;
 
 /**
- * Add methods that indicated that the subsystem using shifting.
+ * Add methods that indicated that the implementing subsystem uses shifting.
  * <p>
  *
  * @author Barel
@@ -31,7 +31,7 @@ public interface Shiftable {
     void shiftLow();
 
     /**
-     * Toggle between the modes
+     * Toggle between the modes.
      */
     void toggle();
 

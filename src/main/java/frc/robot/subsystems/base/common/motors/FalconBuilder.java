@@ -8,7 +8,7 @@ import frc.robot.utilities.FalconConfiguration;
 import java.util.Arrays;
 
 /**
- * Provide a builder for Falcon motors.
+ * A builder for Talon FX motor controllers.
  *
  * @author Barel
  * @version 1.0

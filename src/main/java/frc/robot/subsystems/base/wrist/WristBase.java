@@ -78,18 +78,18 @@ public abstract class WristBase extends SubsystemBase {
     public abstract int getVelocity();
 
     /**
-     * @return the maximum angle that the wrist can reach to.
+     * @return the maximum angle the wrist can reach.
      */
     public abstract double getMaxAngle();
 
     /**
-     * @return the minimum angle that the wrist can reach to.
+     * @return the minimum angle the wrist can reach.
      */
     public abstract double getMinAngle();
 
     /**
      * Apply force base on the current angle of the wrist,
-     * so the wrist won't apply to much or the opposite forces.
+     * so the wrist won't apply too much force or force in the opposing direction.
      * @param angle the current angle of the wrist.
      * @return The force you need to apply so that the wrist move at same speed.
      */

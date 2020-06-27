@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import frc.robot.utilities.TalonConfiguration;
 
 /**
- * Provide a builder for Talon motors.
+ * A builder for Talon SRX motor controllers.
  *
  * @author Barel
  * @version 1.0

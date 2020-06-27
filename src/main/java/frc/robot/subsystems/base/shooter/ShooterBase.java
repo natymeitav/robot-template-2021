@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public abstract class ShooterBase extends SubsystemBase {
 
     /**
-     * Get the current speed of the shooter (in <b>rpm</b>).
+     * Get the current speed of the shooter in RPM.
      *
      * @return the speed of the shooter in rpm.
      */

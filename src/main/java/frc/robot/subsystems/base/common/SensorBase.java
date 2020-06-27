@@ -21,7 +21,7 @@ public interface SensorBase {
     void reset();
 
     /**
-     * @return whether the object was sensed by the proximity.
+     * @return whether the object was sensed by the proximity sensor.
      */
     boolean getState();
 
