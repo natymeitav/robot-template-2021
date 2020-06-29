@@ -35,11 +35,6 @@ public abstract class ConveyorBase extends SubsystemBase {
     public abstract void setPower(double power);
 
     /**
-     * feed the conveyor in one Power Cell per run.
-     */
-    public abstract void feed();
-
-    /**
      * stop the conveyor's motors from moving.
      */
     public abstract void stop();
