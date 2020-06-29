@@ -8,7 +8,7 @@ package frc.robot.subsystems.base.common;
  * @version 1.0
  * @since 2020-off
  */
-public interface SensorBase {
+public interface SensorBased {
 
     /**
      * Update the values from the sensors.
@@ -19,6 +19,11 @@ public interface SensorBase {
      * reset the values to the default.
      */
     void reset();
+
+    /**
+     * @return the raw value returned by the sensor.
+     */
+    double getRawValue();
 
     /**
      * @return whether the object was sensed by the proximity sensor.
