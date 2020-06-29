@@ -8,12 +8,18 @@ package frc.robot.subsystems.base.common;
  * @version 1.0
  * @since 2020-off
  */
-public interface TimerBase {
+public interface TimerBased {
 
     /**
      * Start the timer.
      */
     void startTimer();
+
+    /**
+     * delay the next checking by specific amount of milliseconds
+     * @param ms the amount of time to delay.
+     */
+    void delay(double ms);
 
     /**
      * Stop the timer.
