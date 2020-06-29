@@ -1,7 +1,5 @@
 package frc.robot.utilities;
 
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.subsystems.base.common.Constant;
@@ -12,7 +10,6 @@ import org.apache.commons.lang.math.LongRange;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 
 
 public class Utils {
@@ -56,8 +53,12 @@ public class Utils {
     /**
      * Replaces fields between constants classes.
      *
-     * @param class1 Original constants class
+     * @param class1 Original constants class.
+     * @see #replaceFieldUsingAnnotation(Class)
+     * @see Constant
+     * @deprecated ths field is deprecated because now we are using {@code @Constant}.
      */
+    @Deprecated
     public static void replaceFields(Class<?> class1, Class<?> class2) {
         //Loop and replace all fields
         for (Field f : class2.getDeclaredFields()) {
@@ -135,16 +136,10 @@ public class Utils {
     }
 
     public static void swapConstants(Class<?> original) {
-//        Utils.replaceFields(original, B); // Replace outer constants
-        replaceFieldUsingAnnotation(original);
-        for (Class<?> aClass : original.getDeclaredClasses()) { // Loop constants classes
-            replaceFieldUsingAnnotation(aClass);
+        replaceFieldUsingAnnotation(original); // Replace outer constants
 
-            // Find the class in B Constants
-//            Optional<Class<?>> bClass = Arrays.stream(B.getDeclaredClasses()).filter(c -> c.getSimpleName().equals(aClass.getSimpleName())).findAny();
-//            if (bClass.isEmpty()) continue; // Class isn't present
-//            Utils.replaceFields(aClass, bClass.get());
-        }
+        for (Class<?> aClass : original.getDeclaredClasses()) // Loop constants classes
+            replaceFieldUsingAnnotation(aClass);
     }
 
     /**
