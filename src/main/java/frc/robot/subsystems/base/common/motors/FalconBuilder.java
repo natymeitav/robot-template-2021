@@ -3,9 +3,6 @@ package frc.robot.subsystems.base.common.motors;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import frc.robot.utilities.FalconConfiguration;
-
-import java.util.Arrays;
 
 /**
  * A builder for Talon FX motor controllers.
@@ -34,34 +31,6 @@ public class FalconBuilder {
         motor.configVoltageCompSaturation(12.);
         motor.overrideSoftLimitsEnable(false);
         motor.overrideLimitSwitchesEnable(false);
-    }
-
-    /**
-     * config set of the motors.
-     *
-     * @param configurations the configuration.
-     * @param falcons        the falcons to configure.
-     */
-    public static void configMotors(FalconConfiguration configurations, TalonFX... falcons) {
-        for (TalonFX falcon : falcons) {
-            falcon.configAllSettings(configurations.motorConfigs);
-            falcon.setNeutralMode(configurations.getNeutralMode());
-            falcon.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
-            if (configurations.getVoltageCompensationSaturation() != -1.)
-                falcon.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
-            if (configurations.getThreshHoldCurrent() != -1) {
-                falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
-                        , configurations.getSupplyCurrentLimit()
-                        , configurations.getThreshHoldCurrent()
-                        , configurations.getThreshHoldTime()));
-            }
-            if (!Arrays.equals(configurations.getPidSet(), new double[]{-1, -1, -1, -1})) {
-                falcon.config_kP(0, configurations.getPidSet()[0]);
-                falcon.config_kI(0, configurations.getPidSet()[1]);
-                falcon.config_kD(0, configurations.getPidSet()[2]);
-                falcon.config_kF(0, configurations.getPidSet()[3]);
-            }
-        }
     }
 
     /**

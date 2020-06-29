@@ -53,29 +53,6 @@ public class Utils {
         return value;
     }
 
-    public static void configAllFalcons(FalconConfiguration configurations, TalonFX... falcons) {
-        for (TalonFX falcon : falcons) {
-            falcon.configAllSettings(configurations.motorConfigs);
-            falcon.setNeutralMode(configurations.getNeutralMode());
-            falcon.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
-            if (configurations.getVoltageCompensationSaturation() != -1.)
-                falcon.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
-            if (configurations.getThreshHoldCurrent() != -1) {
-                falcon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(configurations.isEnableCurrentLimit()
-                        , configurations.getSupplyCurrentLimit()
-                        , configurations.getThreshHoldCurrent()
-                        , configurations.getThreshHoldTime()));
-            }
-            if (!Arrays.equals(configurations.getPidSet(), new double[]{-1, -1, -1, -1})) {
-                falcon.config_kP(0, configurations.getPidSet()[0]);
-                falcon.config_kI(0, configurations.getPidSet()[1]);
-                falcon.config_kD(0, configurations.getPidSet()[2]);
-                falcon.config_kF(0, configurations.getPidSet()[3]);
-            }
-
-        }
-    }
-
     /**
      * Replaces fields between constants classes.
      *

@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import frc.robot.utilities.VictorConfiguration;
 
 /**
  * Provide a builder for Victor motors.
@@ -31,21 +30,6 @@ public class VictorBuilder {
         motor.setNeutralMode(NeutralMode.Coast);
         motor.enableVoltageCompensation(true);
         motor.configVoltageCompSaturation(12.);
-    }
-
-    /**
-     * config set of the motors.
-     *
-     * @param configurations the configuration.
-     * @param victors        the victors to configure.
-     */
-    public static void configMotors(VictorConfiguration configurations, VictorSPX... victors) {
-        for (VictorSPX victor : victors) {
-            victor.configAllSettings(configurations.motorConfigs);
-            victor.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
-            victor.setNeutralMode(configurations.getNeutralMode());
-            victor.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
-        }
     }
 
     /**

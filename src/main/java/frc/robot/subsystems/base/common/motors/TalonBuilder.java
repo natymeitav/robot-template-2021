@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import frc.robot.utilities.TalonConfiguration;
 
 /**
  * A builder for Talon SRX motor controllers.
@@ -31,25 +30,6 @@ public class TalonBuilder {
         motor.setNeutralMode(NeutralMode.Coast);
         motor.enableVoltageCompensation(true);
         motor.configVoltageCompSaturation(12.);
-    }
-
-    /**
-     * config set of the motors.
-     *
-     * @param configurations the configuration.
-     * @param talons         the talons to configure.
-     */
-    public static void configMotors(TalonConfiguration configurations, TalonSRX... talons) {
-        for (TalonSRX talonSRX : talons) {
-            talonSRX.configAllSettings(configurations.motorConfigs);
-            talonSRX.configVoltageCompSaturation(configurations.getVoltageCompensationSaturation());
-            talonSRX.setNeutralMode(configurations.getNeutralMode());
-            talonSRX.enableVoltageCompensation(configurations.isEnableVoltageCompensation());
-            talonSRX.config_kP(0, configurations.getPidSet()[0]);
-            talonSRX.config_kI(0, configurations.getPidSet()[1]);
-            talonSRX.config_kD(0, configurations.getPidSet()[2]);
-            talonSRX.config_kF(0, configurations.getPidSet()[3]);
-        }
     }
 
     /**
