@@ -59,6 +59,14 @@ public abstract class WristBase extends SubsystemBase {
     public abstract void setPower(double power);
 
     /**
+     * set the power of the wrist.
+     *
+     * @param power the power to apply on the wrist.
+     * @param arbitraryFeedForward how much velocity the wrist should add to the base power.
+     */
+    public abstract void setPower(double power, double arbitraryFeedForward);
+
+    /**
      * Check whether the wrist at the top possible position.
      *
      * @return whether or not the wrist at the top position.
@@ -76,16 +84,6 @@ public abstract class WristBase extends SubsystemBase {
      * @return the velocity applied in the wrist.
      */
     public abstract int getVelocity();
-
-    /**
-     * @return the maximum angle the wrist can reach.
-     */
-    public abstract double getMaxAngle();
-
-    /**
-     * @return the minimum angle the wrist can reach.
-     */
-    public abstract double getMinAngle();
 
     /**
      * Apply force base on the current angle of the wrist,
