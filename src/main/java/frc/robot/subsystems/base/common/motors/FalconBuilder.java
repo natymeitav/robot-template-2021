@@ -140,18 +140,32 @@ public class FalconBuilder {
      *
      * @param sofLimitEnabled whether the soft limit is enabled.
      * @param softThreshold   the threshold.
-     * @param cruiseVelocity  cruise velocity.
      * @return a reference to this object.
      */
-    public FalconBuilder configPhysics(boolean sofLimitEnabled, int softThreshold, int cruiseVelocity) {
+    public FalconBuilder configSoftLimit(boolean sofLimitEnabled, int softThreshold) {
         motor.configForwardSoftLimitEnable(sofLimitEnabled);
         motor.configReverseSoftLimitEnable(sofLimitEnabled);
         motor.configForwardSoftLimitThreshold(softThreshold);
         motor.configReverseSoftLimitThreshold(softThreshold);
 
-        motor.configMotionCruiseVelocity(cruiseVelocity);
         return this;
     }
+
+
+    /**
+     * config the acceleration and the cruise velocity.
+     *
+     * @param acceleration the acceleration in for the motor.
+     * @param cruiseVelocity  cruise velocity.
+     * @return a reference to this object.
+     */
+    public FalconBuilder configVelocityAndAcceleration(int acceleration, int cruiseVelocity) {
+        motor.configMotionAcceleration(acceleration);
+        motor.configMotionCruiseVelocity(cruiseVelocity);
+
+        return this;
+    }
+
 
     /**
      * config the current limit.

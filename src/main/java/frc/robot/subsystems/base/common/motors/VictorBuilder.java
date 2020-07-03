@@ -139,18 +139,32 @@ public class VictorBuilder {
      *
      * @param sofLimitEnabled whether the soft limit is enabled.
      * @param softThreshold   the threshold.
-     * @param cruiseVelocity  cruise velocity.
      * @return a reference to this object.
      */
-    public VictorBuilder configPhysics(boolean sofLimitEnabled, int softThreshold, int cruiseVelocity) {
+    public VictorBuilder configSoftLimit(boolean sofLimitEnabled, int softThreshold) {
         motor.configForwardSoftLimitEnable(sofLimitEnabled);
         motor.configReverseSoftLimitEnable(sofLimitEnabled);
         motor.configForwardSoftLimitThreshold(softThreshold);
         motor.configReverseSoftLimitThreshold(softThreshold);
 
-        motor.configMotionCruiseVelocity(cruiseVelocity);
         return this;
     }
+
+
+    /**
+     * config the acceleration and the cruise velocity.
+     *
+     * @param acceleration the acceleration in for the motor.
+     * @param cruiseVelocity  cruise velocity.
+     * @return a reference to this object.
+     */
+    public VictorBuilder configVelocityAndAcceleration(int acceleration, int cruiseVelocity) {
+        motor.configMotionAcceleration(acceleration);
+        motor.configMotionCruiseVelocity(cruiseVelocity);
+
+        return this;
+    }
+
 
     /**
      * @param master the victor to follow.
