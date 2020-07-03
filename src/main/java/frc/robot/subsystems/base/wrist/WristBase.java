@@ -16,33 +16,22 @@ public abstract class WristBase extends SubsystemBase {
     /**
      * Return the current angle of the wrist.
      * The return value is the angle in <b>degrees</b>,
-     * and the value should always be between {@link WristBase#getMinAngle()} and {@link WristBase#getMaxAngle()}.
+     * and the value should always be between the MIN_ANGLE, and the MAX_ANGLE.
      *
      * @return the current angle of the wrist.
      * @see frc.robot.utilities.Utils#clamp
-     * @see WristBase#getMinAngle()
-     * @see WristBase#getMaxAngle()
      */
     public abstract double getAngle();
 
 
     /**
      * Move the wrist to the desired angle.
-     * The value should always be between {@link WristBase#getMinAngle()} and {@link WristBase#getMaxAngle()}.
+     * and the value should always be between the MIN_ANGLE, and the MAX_ANGLE.
      *
      * @param angle the desired angle to move to.
      * @see frc.robot.utilities.Utils#clamp
-     * @see WristBase#getMinAngle()
-     * @see WristBase#getMaxAngle()
      */
     public abstract void setAngle(double angle);
-
-    /**
-     * Get the current speed of the wrist.
-     *
-     * @return the current speed of the wrist.
-     */
-    public abstract double getSpeed();
 
     /**
      * set the speed of the wrist.

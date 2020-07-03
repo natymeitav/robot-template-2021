@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * @version 1.0
  * @since 2020-off
  * <p>
- * The class contains various methods that every {@code Wrist} <b>should</b> implement.
+ * The class contains various methods that every {@code Conveyor} <b>should</b> implement.
  * <p>
  * The purpose of this class is to provide guidelines and restrict what important to us and what not.
  */

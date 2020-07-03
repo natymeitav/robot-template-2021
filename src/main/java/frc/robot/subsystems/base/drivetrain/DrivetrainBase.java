@@ -33,19 +33,14 @@ public abstract class DrivetrainBase extends SubsystemBase {
     }
 
     /**
-     * @return the left velocity on the left side of the drivetrain.
+     * @return the left velocity on the left side of the drivetrain, in "m / sec".
      */
     public abstract double getLeftVelocity();
 
     /**
-     * @return the left velocity on the right side of the drivetrain.
+     * @return the left velocity on the right side of the drivetrain, in "m / sec".
      */
     public abstract double getRightVelocity();
-
-    /**
-     * @return the speed of the left side of the drivetrain.
-     */
-    public abstract double getLeftSpeed();
 
     /**
      * Set the speed to move the left side of the drivetrain.
@@ -53,11 +48,6 @@ public abstract class DrivetrainBase extends SubsystemBase {
      * @param speed the speed you want the left side of the drivetrain.
      */
     public abstract void setLeftSpeed(double speed);
-
-    /**
-     * @return the speed of the right side of the drivetrain.
-     */
-    public abstract double getRightSpeed();
 
     /**
      * Set the speed to move the right side of the drivetrain.

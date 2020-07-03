@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public abstract class IntakeBase extends SubsystemBase {
 
     /**
-     * @return whether or not the shooter is opened.
+     * @return whether or not the intake is opened.
      */
     public abstract boolean isOpen();
 
     /**
-     * @return whether or not the shooter is closed.
+     * @return whether or not the intake is closed.
      */
     public abstract boolean isClose();
 

@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public abstract class ElevatorBase extends SubsystemBase {
 
     /**
-     * @return the current height of the elevator.
+     * @return the current height of the elevator in cm.
      */
     public abstract double getHeight();
 
