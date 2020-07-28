@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase {
     }
 
 
-    enum state {
+    public enum state {
         OPEN,
         CLOSE,
         TOGGLE
