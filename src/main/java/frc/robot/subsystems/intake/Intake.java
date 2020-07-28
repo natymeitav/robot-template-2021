@@ -1,0 +1,25 @@
+package frc.robot.subsystems.intake;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Ports;
+
+public class Intake extends SubsystemBase {
+    public final TalonSRX motor = new TalonSRX(Ports.Intake.MOTOR);
+
+    public Intake() {
+        motor.setInverted(Ports.Intake.IS_INVERTED);
+    }
+
+    public void SetPower(double power){
+        motor.set(ControlMode.PercentOutput,power);
+    }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+    }
+}
+
