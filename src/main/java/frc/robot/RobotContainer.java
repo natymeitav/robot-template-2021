@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.commands.Chomp;
 import frc.robot.subsystems.intake.commands.EatCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,6 +26,7 @@ public class RobotContainer {
   public Intake intake = new Intake();
   public XboxController Xbox = new XboxController(1);
   public JoystickButton a = new JoystickButton(Xbox, XboxController.Button.kA.value);
+  public JoystickButton b = new JoystickButton(Xbox, XboxController.Button.kB.value);
   // The robot's subsystems and commands are defined here...
 
 
@@ -44,6 +46,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     a.whileHeld(new EatCommand(intake, 0.5));
+    b.whenPressed(new Chomp(Intake, Intake.state.OPEN))
   }
 
 
