@@ -167,3 +167,5 @@ imgui.ini
 .idea/
 
 *.xml
+
+*.bin
