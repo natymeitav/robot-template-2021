@@ -20,11 +20,11 @@ import frc.robot.subsystems.ExampleSubsystem.commands.ExampleCommand;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  public Intake intake = new Intake();
+  public XboxController Xbox = new XboxController(1);
+  public JoystickButton a = new JoystickButton(Xbox, XboxController.Button.kA.value);
+  public JoystickButton b = new JoystickButton(Xbox, XboxController.Button.kB.value);
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
 
 
   /**
@@ -42,6 +42,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    a.whileHeld(new EatCommand(intake, 0.5));
+    b.whenPressed(new Chomp(Intake, Intake.state.OPEN))
   }
 
 
@@ -51,7 +53,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
 }
