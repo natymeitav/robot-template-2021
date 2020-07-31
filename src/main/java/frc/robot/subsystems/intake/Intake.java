@@ -37,6 +37,7 @@ public class Intake extends SubsystemBase {
         TOGGLE
     }
 
+
     public void setPiston(state pistonState) {
         switch (pistonState) {
             case OPEN:

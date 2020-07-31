@@ -29,8 +29,6 @@ public class Chomp extends CommandBase {
     @Override
     public void initialize() {
         m_subsystem.setPiston(State);
-
-
     }
 
     // Called every time the scheduler runs while the command is scheduled.

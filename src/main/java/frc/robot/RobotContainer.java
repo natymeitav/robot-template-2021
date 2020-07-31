@@ -8,12 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.DriveTrain.Commands.DriveCommand;
+import frc.robot.subsystems.DriveTrain.drivetrain;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.commands.Chomp;
 import frc.robot.subsystems.intake.commands.EatCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -24,9 +26,12 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   public Intake intake = new Intake();
-  public XboxController Xbox = new XboxController(1);
+  public frc.robot.subsystems.DriveTrain.drivetrain drivetrain = new drivetrain();
+  public XboxController Xbox = new XboxController(2);
   public JoystickButton a = new JoystickButton(Xbox, XboxController.Button.kA.value);
   public JoystickButton b = new JoystickButton(Xbox, XboxController.Button.kB.value);
+  public static Joystick right = new Joystick(0);
+  public static Joystick left = new Joystick(1);
   // The robot's subsystems and commands are defined here...
 
 
@@ -35,6 +40,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
+    drivetrain.setDefaultCommand(new DriveCommand(drivetrain));
     configureButtonBindings();
   }
 
@@ -46,7 +52,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     a.whileHeld(new EatCommand(intake, 0.5));
-    b.whenPressed(new Chomp(Intake, Intake.state.OPEN))
+    b.whenPressed(new Chomp(intake, Intake.state.TOGGLE));
+
   }
 
 

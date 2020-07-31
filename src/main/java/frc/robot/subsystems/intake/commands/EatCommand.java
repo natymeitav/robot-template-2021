@@ -15,9 +15,9 @@ import frc.robot.subsystems.intake.Intake;
  * An example command that uses an example subsystem.
  */
 public class EatCommand extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Intake m_subsystem;
-  private double power;
+    @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+    private final Intake m_subsystem;
+    private double power;
   /**
    * Creates a new ExampleCommand.
    *
